@@ -8,12 +8,12 @@ public class Merge{
     if (lo >= hi) return ;
     int[] left = split(data, 0, midP(data));
     int[] right = split(data, midP(data), data.length);
-    System.out.println(Arrays.toString(data));
     System.out.println("left : " + Arrays.toString(left));
     System.out.println("right : " + Arrays.toString(right));
-    //mergesort(left);
-    //mergesort(right);
-    //mergeUP somehow
+    mergesort(left);
+    mergesort(right);
+    mergeUP(data, left, right);
+    System.out.println(Arrays.toString(data));
   }
   //finds the middle to partition mergesort left and right
   private static int midP(int[]data) {
@@ -31,6 +31,29 @@ public class Merge{
       pos++;
     }
     return ans;
+  }
+
+  private static void mergeUP(int[] d, int[] l, int[] r){
+    int lpos = 0;
+    int rpos = 0;
+    for (int i = 0; i < d.length; i++) {
+      if (rpos >= r.length) {
+        d[i] = l[lpos];
+        lpos++;
+      } //these two are to prevent indexoutofbounds
+      else if (lpos >= l.length) {
+        d[i] = r[rpos];
+        rpos++;
+      }
+      else if (r[rpos] < l[lpos]) {
+        d[i] = r[rpos];
+        rpos++;
+      } //these two are comparing which is greater in the arrays and shoving them up to the array on the level above
+      else {
+        d[i] = l[lpos];
+        lpos++;
+      }
+    }
   }
   public static void main(String[] args) {
     int[] ary = new int[]{38, 27, 43, 3, 9, 83, 10};
