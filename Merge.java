@@ -8,12 +8,12 @@ public class Merge{
     if (lo >= hi) return ;
     int[] left = split(data, 0, midP(data));
     int[] right = split(data, midP(data), data.length);
-    System.out.println("left : " + Arrays.toString(left));
-    System.out.println("right : " + Arrays.toString(right));
+    //System.out.println("left : " + Arrays.toString(left));
+    //System.out.println("right : " + Arrays.toString(right));
     mergesort(left);
     mergesort(right);
     mergeUP(data, left, right);
-    System.out.println(Arrays.toString(data));
+    //System.out.println(Arrays.toString(data));
   }
   //finds the middle to partition mergesort left and right
   private static int midP(int[]data) {
@@ -32,7 +32,8 @@ public class Merge{
     }
     return ans;
   }
-
+  /*compares the values @ the indices of the left and right arrays,
+  merges to the array the level above whichever is smaller*/
   private static void mergeUP(int[] d, int[] l, int[] r){
     int lpos = 0;
     int rpos = 0;
@@ -55,12 +56,19 @@ public class Merge{
       }
     }
   }
+
   public static void main(String[] args) {
     int[] ary = new int[]{38, 27, 43, 3, 9, 83, 10};
     System.out.println("original : " + Arrays.toString(ary));
     mergesort(ary);
     System.out.println("sorted : " + Arrays.toString(ary));
     //[3,9,10,27,38,43,83];
+
+    int[] dup = new int[]{38,38, 27, 27, 12, 24, 3, 100, 39, 6, 0, 1, 1};
+    System.out.println("original : " + Arrays.toString(dup));
+    mergesort(dup);
+    System.out.println("sorted : " + Arrays.toString(dup));
+    //[0,1,1,3,6,12,24,27,27,38,38,39,100];
   }
 
 }
