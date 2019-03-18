@@ -2,7 +2,10 @@ import java.util.*;
 public class Merge{
   /*sort the array from least to greatest value. This is a wrapper function*/
   public static void mergesort(int[]data) {
+    int[] temp = new int[data.length]; //preallocate to wrapper method
+    copyAry(data, temp); //copy the contents of data to temp
     mergesort(data, 0, data.length -1);
+    //mergesort(data, temp, 0, data.length -1);
   }
   private static void mergesort(int[]data, int lo, int hi) {
     if (lo >= hi) return ;
@@ -54,6 +57,22 @@ public class Merge{
         d[i] = l[lpos];
         lpos++;
       }
+    }
+  }
+
+  //currently stack overflow*
+  private static void mergesort(int[]data, int[] temp, int lo, int hi) {
+    if (lo > hi) return ;
+      int[] left = split(temp, 0, midP(temp));
+      int[] right = split(temp, midP(temp), temp.length);
+      mergesort(left);
+      mergesort(right);
+      mergeUP(data, left, right);
+      //merge back into the original
+    }
+  private static void copyAry(int[] d, int[] t) {
+    for (int i = 0; i < d.length; i++) {
+      t[i] = d[i];
     }
   }
 
