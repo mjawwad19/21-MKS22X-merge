@@ -3,12 +3,15 @@ public class Merge{
   /*sort the array from least to greatest value. This is a wrapper function*/
   public static void mergesort(int[]data) {
     int[] temp = new int[data.length]; //preallocate to wrapper method
-    copyAry(data, temp); //copy the contents of data to temp
     //mergesort(data, 0, data.length -1);
     mergesort(data, temp, 0, data.length -1);
   }
   private static void mergesort(int[]data, int lo, int hi) {
     if (lo >= hi) return ;
+    if (hi - lo <= 7) {
+      insertionSort(data,lo, hi);
+      return;
+    }
     int[] left = split(data, 0, midP(lo, hi));
     int[] right = split(data, midP(lo, hi), data.length);
     //System.out.println("left : " + Arrays.toString(left));
@@ -62,39 +65,49 @@ public class Merge{
 
   //currently stack overflow*
   private static void mergesort(int[]data, int[] temp, int lo, int hi) {
-    if (lo >= hi) return;
-    mergesort(temp, data, lo, midP(lo, hi)-1); //left
-    mergesort(temp, data, midP(lo, hi), hi); //right
+    if (hi - lo <= 7) {
+      insertionSort(data, lo, hi);
+      return;
+    }
+    for (int i = lo; i < hi+1; i++) {
+      temp[i] = data[i]; //copy data to temp;
+    }
+    mergesort(temp, data, lo, midP(lo, hi)); //left
+    mergesort(temp, data, midP(lo, hi) +1, hi); //right
     mergePLUS(data, temp, 0, midP(lo, hi), hi);
     }
-  private static void copyAry(int[] d, int[] t) {
-    for (int i = 0; i < d.length; i++) {
-      t[i] = d[i];
+
+  private static void mergePLUS(int[] data, int[] temp, int lo, int mid, int hi) {
+    int i0 = lo;
+    int i1 = mid +1;
+    int dI = lo;
+    while (i0 <= mid || i1 <= hi) {
+      if (i0 > mid) {
+        data[dI] = temp[i1];
+        i1++;
+      }else if (i1 > hi) {
+        data[dI] = temp[i0];
+        i0++;
+      }else if (temp[i0] <= temp[i1]) {
+        data[dI] = temp[i0];
+        i0++;
+      }else {
+        data[dI] = temp[i1];
+        i1++;
+      }
+      dI++;
     }
   }
 
-  private static void mergePLUS(int[] data, int[] temp, int lo, int mid, int hi) {
-    int l = lo;
-    int i = lo;
-    int m = mid;
-    while (l <= hi) {
-      if (mid > hi) {
-        data[l] = temp[i];
-        l++;
-        i++;
-      }else if (i >= mid) {
-        data[l] = temp[m];
-        m++;
-        l++;
-      }else if (temp[m] < temp[i]) {
-        data[l] = temp[m];
-        m++;
-        l++;
-      }else {
-        data[l] = temp[i];
-        i++;
-        l++;
+  private static void insertionSort(int[] d, int l, int h) {
+    for (int i = l + 1; i < h + 1; i++) {
+      int temp = d[i];
+      int j = i;
+      while (j > l && temp < d[j-1]) {
+        d[j] = d[j-1];
+        j--;
       }
+      d[j] = temp; //swap
     }
   }
 
