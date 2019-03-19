@@ -6,7 +6,7 @@ public class Merge{
     //mergesort(data, 0, data.length -1);
     mergesort(data, temp, 0, data.length -1);
   }
-  private static void mergesort(int[]data, int lo, int hi) {
+  /*private static void mergesort(int[]data, int lo, int hi) {
     if (lo >= hi) return ;
     if (hi - lo <= 7) {
       insertionSort(data,lo, hi);
@@ -39,7 +39,7 @@ public class Merge{
     return ans;
   }
   /*compares the values @ the inindicesdices of the left and right arrays,
-  merges to the array the level above whichever is smaller*/
+  merges to the array the level above whichever is smaller
   private static void mergeUP(int[] d, int[] l, int[] r){
     int lpos = 0;
     int rpos = 0;
@@ -61,7 +61,7 @@ public class Merge{
         lpos++;
       }
     }
-  }
+  }*/
 
   //currently stack overflow*
   private static void mergesort(int[]data, int[] temp, int lo, int hi) {
@@ -72,9 +72,10 @@ public class Merge{
     for (int i = lo; i < hi+1; i++) {
       temp[i] = data[i]; //copy data to temp;
     }
-    mergesort(temp, data, lo, midP(lo, hi)); //left
-    mergesort(temp, data, midP(lo, hi) +1, hi); //right
-    mergePLUS(data, temp, 0, midP(lo, hi), hi);
+    int mid = (lo / 2) + (hi/2);
+    mergesort(temp, data, lo, mid); //left
+    mergesort(temp, data, mid +1, hi); //right
+    mergePLUS(data, temp, lo, mid, hi);
     }
 
   private static void mergePLUS(int[] data, int[] temp, int lo, int mid, int hi) {
@@ -98,6 +99,7 @@ public class Merge{
       dI++;
     }
   }
+
 
   private static void insertionSort(int[] d, int l, int h) {
     for (int i = l + 1; i < h + 1; i++) {
