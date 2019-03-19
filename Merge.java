@@ -4,8 +4,8 @@ public class Merge{
   public static void mergesort(int[]data) {
     int[] temp = new int[data.length]; //preallocate to wrapper method
     copyAry(data, temp); //copy the contents of data to temp
-    mergesort(data, 0, data.length -1);
-    //mergesort(data, temp, 0, data.length -1);
+    //mergesort(data, 0, data.length -1);
+    mergesort(data, temp, 0, data.length -1);
   }
   private static void mergesort(int[]data, int lo, int hi) {
     if (lo >= hi) return ;
@@ -35,7 +35,7 @@ public class Merge{
     }
     return ans;
   }
-  /*compares the values @ the indices of the left and right arrays,
+  /*compares the values @ the inindicesdices of the left and right arrays,
   merges to the array the level above whichever is smaller*/
   private static void mergeUP(int[] d, int[] l, int[] r){
     int lpos = 0;
@@ -63,16 +63,38 @@ public class Merge{
   //currently stack overflow*
   private static void mergesort(int[]data, int[] temp, int lo, int hi) {
     if (lo > hi) return ;
-      int[] left = split(temp, 0, midP(temp));
-      int[] right = split(temp, midP(temp), temp.length);
-      mergesort(left);
-      mergesort(right);
-      mergeUP(data, left, right);
-      //merge back into the original
+    mergesort(temp, data, lo, midP(temp)); //left
+    mergesort(temp, data, midP(temp) + 1, hi); //right
+    mergePLUS(data, temp, 0, midP(temp), hi);
     }
   private static void copyAry(int[] d, int[] t) {
     for (int i = 0; i < d.length; i++) {
       t[i] = d[i];
+    }
+  }
+
+  private static void mergePLUS(int[] data, int[] temp, int lo, int mid, int hi) {
+    int l = lo;
+    int i = lo;
+    int m = mid;
+    while (l <= hi) {
+      if (mid > hi) {
+        data[l] = temp[i];
+        l++;
+        i++;
+      }else if (i >= mid) {
+        data[l] = temp[m];
+        m++;
+        l++;
+      }else if (temp[m] < temp[i]) {
+        data[l] = temp[m];
+        m++;
+        l++;
+      }else {
+        data[l] = temp[i];
+        i++;
+        l++;
+      }
     }
   }
 
