@@ -9,8 +9,8 @@ public class Merge{
   }
   private static void mergesort(int[]data, int lo, int hi) {
     if (lo >= hi) return ;
-    int[] left = split(data, 0, midP(data));
-    int[] right = split(data, midP(data), data.length);
+    int[] left = split(data, 0, midP(lo, hi));
+    int[] right = split(data, midP(lo, hi), data.length);
     //System.out.println("left : " + Arrays.toString(left));
     //System.out.println("right : " + Arrays.toString(right));
     mergesort(left);
@@ -19,11 +19,11 @@ public class Merge{
     //System.out.println(Arrays.toString(data));
   }
   //finds the middle to partition mergesort left and right
-  private static int midP(int[]data) {
-    if (data.length % 2 == 1) {
-      return data.length/2 + 1;
+  private static int midP(int lo, int hi) {
+    if ((hi -lo) % 2 == 1) {
+      return (hi + lo)/2 + 1;
     }
-    else return data.length/2;
+    else return (hi + lo)/2;
   }
   //creates a subarray and copies over values from index to index specified;
   private static int[] split(int[] data, int s, int e) {
@@ -62,10 +62,10 @@ public class Merge{
 
   //currently stack overflow*
   private static void mergesort(int[]data, int[] temp, int lo, int hi) {
-    if (lo > hi) return ;
-    mergesort(temp, data, lo, midP(temp)); //left
-    mergesort(temp, data, midP(temp) + 1, hi); //right
-    mergePLUS(data, temp, 0, midP(temp), hi);
+    if (lo >= hi) return;
+    mergesort(temp, data, lo, midP(lo, hi)-1); //left
+    mergesort(temp, data, midP(lo, hi), hi); //right
+    mergePLUS(data, temp, 0, midP(lo, hi), hi);
     }
   private static void copyAry(int[] d, int[] t) {
     for (int i = 0; i < d.length; i++) {
