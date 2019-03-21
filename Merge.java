@@ -65,7 +65,7 @@ public class Merge{
 
   //currently stack overflow*
   private static void mergesort(int[]data, int[] temp, int lo, int hi) {
-    if (hi - lo <= 12) {
+    if (hi - lo <= 43) {
       insertionSort(data, lo, hi);
       return;
     }
